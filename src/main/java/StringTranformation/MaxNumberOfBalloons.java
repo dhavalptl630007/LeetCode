@@ -1,4 +1,4 @@
-package String;
+package StringTranformation;
 
 //https://leetcode.com/problems/maximum-number-of-balloons/submissions/
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package String;
+package StringTranformation;
 
 // https://leetcode.com/problems/reverse-vowels-of-a-string/submissions/
 // for better code visibility : maintain a list and put the all vowels in that

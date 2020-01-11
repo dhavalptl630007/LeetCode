@@ -42,5 +42,4 @@ public class MinSubArrayLen {
 		
 		return ans;
 	}
-
 }
