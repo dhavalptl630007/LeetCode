@@ -33,16 +33,22 @@ class VertexNode implements Comparator<VertexNode> {
 	}
 }
 
-public class SocratesCowsProblem {
+public class p_haval_40112312_1 {
 
-	static LinkedHashMap<String, ArrayList<String>> graph = new LinkedHashMap<String, ArrayList<String>>();
-	static LinkedHashMap<String, Integer> distmap = new LinkedHashMap<String, Integer>();
-	static LinkedHashMap<String, Integer> sourceDist = new LinkedHashMap<String, Integer>();
-	static HashSet<String> vertices = new HashSet<String>();
-	static PriorityQueue<VertexNode> queue;
-	static HashSet<String> visited = new HashSet<String>();
+	static LinkedHashMap<String, ArrayList<String>> graph;
+	static LinkedHashMap<String, Integer> edgeWeight;
+	static LinkedHashMap<String, Integer> DistanceFromSource;
+	static HashSet<String> vertices;
+	static PriorityQueue<VertexNode> priorityQueue;
+	static HashSet<String> visited;
 
 	public static void main(String[] args) {
+
+		graph = new LinkedHashMap<String, ArrayList<String>>();
+		edgeWeight = new LinkedHashMap<String, Integer>();
+		DistanceFromSource = new LinkedHashMap<String, Integer>();
+		vertices = new HashSet<String>();
+		visited = new HashSet<String>();
 
 		Scanner sc = new Scanner(System.in);
 		int numberOfEdges = Integer.parseInt(sc.nextLine());
@@ -56,20 +62,18 @@ public class SocratesCowsProblem {
 			vertices.add(endVertex);
 			creategraph(startVertex, endVertex, dist);
 		}
-
-	
-
-		queue = new PriorityQueue<VertexNode>(vertices.size(), new VertexNode());
+		priorityQueue = new PriorityQueue<VertexNode>(vertices.size(), new VertexNode());
 		intialize();
 		putAllnodestoQueue();
 
 		findshortestPath("z");
-		System.out.println(sourceDist);
+
+		// System.out.println(DistanceFromSource);
 
 		int minDistance = Integer.MAX_VALUE;
 		String minDistanceVertexNode = "";
 
-		for (Entry entry : sourceDist.entrySet()) {
+		for (Entry entry : DistanceFromSource.entrySet()) {
 
 			String vertice = (String) entry.getKey();
 
@@ -82,42 +86,49 @@ public class SocratesCowsProblem {
 
 		}
 
+		sc.close();
 		System.out.println(minDistanceVertexNode + " " + minDistance);
 
 	}
 
 	private static void putAllnodestoQueue() {
 
-		for (Entry entry : sourceDist.entrySet()) {
+		for (Entry entry : DistanceFromSource.entrySet()) {
 
-			queue.add(new VertexNode((String) entry.getKey(), (Integer) entry.getValue()));
+			priorityQueue.add(new VertexNode((String) entry.getKey(), (Integer) entry.getValue()));
 
 		}
 
 	}
 
-	private static void findshortestPath(String string) {
+	private static void findshortestPath(String source) {
 
 		while (visited.size() != vertices.size()) {
 
-			String parent = queue.remove().vertex;
+			String parent = priorityQueue.remove().vertex;
 
 			visited.add(parent);
 
 			ArrayList<String> adjacentList = graph.get(parent);
 
-			for (String adjacentVertexNode : adjacentList) {
+			if (adjacentList != null) {
 
-				if (!visited.contains(adjacentVertexNode)) {
+				for (String adjacentVertexNode : adjacentList) {
 
-					int newDistance = distmap.get(parent + adjacentVertexNode) + sourceDist.get(parent);
-					int oldDistance = sourceDist.get(adjacentVertexNode);
-					if (newDistance < oldDistance) {
-						// relax the vertice
-						sourceDist.put(adjacentVertexNode, newDistance);
+					if (!visited.contains(adjacentVertexNode)) {
+
+						int newDistance = edgeWeight.get(parent + adjacentVertexNode) + DistanceFromSource.get(parent);
+						int oldDistance = DistanceFromSource.get(adjacentVertexNode);
+						if (newDistance < oldDistance) {
+							// relax the vertice
+							DistanceFromSource.put(adjacentVertexNode, newDistance);
+						}
+
+						priorityQueue
+								.add(new VertexNode(adjacentVertexNode, DistanceFromSource.get(adjacentVertexNode)));
+
 					}
 
-					queue.add(new VertexNode(adjacentVertexNode, sourceDist.get(adjacentVertexNode)));
 				}
 
 			}
@@ -130,11 +141,11 @@ public class SocratesCowsProblem {
 
 		for (Entry entry : graph.entrySet()) {
 
-			sourceDist.put((String) entry.getKey(), Integer.MAX_VALUE);
+			DistanceFromSource.put((String) entry.getKey(), Integer.MAX_VALUE);
 
 		}
 
-		sourceDist.put("z", 0);
+		DistanceFromSource.put("z", 0);
 
 	}
 
@@ -156,8 +167,8 @@ public class SocratesCowsProblem {
 			graph.put(endVertex, list);
 		}
 
-		distmap.put(startVertex + endVertex, dist);
-		distmap.put(endVertex + startVertex, dist);
+		edgeWeight.put(startVertex + endVertex, dist);
+		edgeWeight.put(endVertex + startVertex, dist);
 
 	}
 }
