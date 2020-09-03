@@ -12,9 +12,43 @@ public class SubarraySum {
 		int nums [] = {1,2,3};
 		
 		System.out.println(subarraySum(3,nums));
-		
+		System.out.println(subarraySum2(3,nums));
 
 	}
+	
+	private static int subarraySum2(int k, int[] nums) {
+		
+		    int left = 0;
+	        int right = 0;
+	        int sum = 0;
+	        int count = 0;
+	        while(right<nums.length){
+	            
+	            while(sum<k){
+	                   sum += nums[right];
+	                   if(right<nums.length-1)
+	  	                 right++;
+	                   //right++;
+	                  }
+	            if(sum == k){
+	            	count++;
+	            	// sum = sum-nums[left]; 
+	            	 //left++;
+	            	 if(right<nums.length-1)
+	                 right++;
+	            }
+	           while(sum>=k && left<nums.length){
+	              
+	               sum = sum-nums[left]; 
+	               left++;
+	           }
+	            
+	            //right++;
+	        }    
+	        
+	       return count;
+	}
+	
 
 	private static int subarraySum(int k, int[] nums) {
 		

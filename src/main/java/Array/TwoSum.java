@@ -34,7 +34,7 @@ public class TwoSum {
 				return result;
 			}
 			map.put(numbers[i],i);
-			
+		
 		}
 		
 		 /* Two Pointer Solutions

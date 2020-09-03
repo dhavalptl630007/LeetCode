@@ -5,8 +5,8 @@ public class LongestCommonSubsequence {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		String X = "ABCBDAB";
-		String Y = "BDCABA";
+		String X = "AA";
+		String Y = "AA";
 
 		int m = X.length();
 		int n = Y.length();
